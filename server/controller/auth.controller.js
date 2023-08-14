@@ -15,12 +15,20 @@ export const register = async (req, res) => {
         password: hashPassword,
       });
 
-      await user.save()
+      await user.save();
+
+      const token = jwttoken.sign({
+        userId: user._id
+      },
+      process.env.JWT_SECRET,
+      {expiresIn: '10d'}
+      );
 
       console.log('User created');
       res.status(200).json({
         message: "User successfully registered",
-        user
+        user,
+        token: `Bearer ${token}`
       });
 
     } catch (err) {
@@ -44,7 +52,7 @@ export const login = async (req, res) => {
 
     if(isPassword) {
       const token = jwttoken.sign({
-        id: isUser._id
+        userId: isUser._id
       },
       process.env.JWT_SECRET,
       {expiresIn: '10d'}
@@ -58,13 +66,6 @@ export const login = async (req, res) => {
         message: "Wrong password"
       });
     }
-    // try {
-
-    // } catch (err) {
-    //   res.status(500).json({
-    //     "message": "Some error, please, try later"
-    //   });
-    // }
   } else {
     res.status(404).json({
       message: "This user is not registered"
