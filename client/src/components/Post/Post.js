@@ -9,6 +9,7 @@ import './Post.css';
 import userImg from '../../assets/icons/user-icon.svg';
 import likeImg from '../../assets/icons/like-icon.svg';
 import viewsImg from '../../assets/icons/eye-icon.svg';
+import commentImg from '../../assets/icons/comment-icon.svg';
 
 const Post = ({post}) => {
   const postShortText = getShorterText(post.text, 7);
@@ -60,6 +61,16 @@ const Post = ({post}) => {
               <Col>
                 <span className="d-block">
                   {post.likes}
+                </span>                
+              </Col>
+            </Row>
+            <Row className="w-100">
+              <Col className="d-flex justify-content-end align-items-center">
+                <img className="card-icon" src={commentImg} alt="likes" />
+              </Col>
+              <Col>
+                <span className="d-block">
+                  {post.comments.length}
                 </span>                
               </Col>
             </Row>
