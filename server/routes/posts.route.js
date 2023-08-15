@@ -13,6 +13,6 @@ router.post('/addpost', passport.authenticate('jwt', {session: false}), addPost)
 
 router.post('/likepost', likePost);
 
-router.post('/deletepost', deletePost);
+router.delete('/deletepost', deletePost);
 
 export default router;

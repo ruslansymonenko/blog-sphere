@@ -13,6 +13,7 @@ export const register = async (req, res) => {
       const user = new userSchema({
         email: req.body.email,
         password: hashPassword,
+        name: req.body.email,
       });
 
       await user.save();

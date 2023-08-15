@@ -12,18 +12,17 @@ const userSchema = new mongoose.Schema({
   },
   name: {
     type: String,
-    required: false,
-    default: '',
+    required: true,
   },
   photoSrc: {
     type: String,
     required: false,
     default: '',
   },
-  posts: {
-    ref: 'posts',
-    type: Schema.Types.ObjectId,
-  }
+  posts: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'post'
+  }]
 }, {timestamps: true});
 
 export default mongoose.model('user', userSchema);
