@@ -1,12 +1,26 @@
-import React from "react";
+import { lazy } from "react";
+import { Route, Routes } from 'react-router-dom';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import Header from "./components/Header/Header";
+import Layout from "./layout/Layout";
+
+import './App.css';
+
+const HomePage = lazy(() => import('./pages/HomePage/HomePage'));
+const MyPostsPage = lazy(() => import('./pages/MyPostsPage/MyPostsPage'));
+
+
 
 function App() {
   return (
     <div className="App">
-      <Header/>
+      <Routes>
+        <Route path="/" element={<Layout/>}>
+          <Route index path="/" element={<HomePage/>}/>
+          <Route path="/myposts" element={<MyPostsPage/>}/>
+        </Route>
+      </Routes>
     </div>
   );
 }
