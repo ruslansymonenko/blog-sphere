@@ -3,8 +3,13 @@ import userSchema from "../database/scheme/user.schema.js";
 import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
 
-export const getPosts = (req, res) => {
-  console.log('get all posts');
+export const getAllPosts = async (req, res) => {
+  const allPosts = await postSchema.find();
+
+  res.status(200).json({
+    message: 'Successful connection',
+    posts: allPosts,
+  })
 };
 
 export const getPost = (req, res) => {

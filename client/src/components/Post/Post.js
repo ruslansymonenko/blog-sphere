@@ -39,7 +39,7 @@ const Post = ({post}) => {
               </Col>
               <Col>
                 <span className="d-block">
-                  {post.name}
+                  {post.userName}
                 </span>
               </Col>
             </Row>

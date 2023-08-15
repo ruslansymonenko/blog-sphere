@@ -1,6 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import passport from 'passport';
+import cors from 'cors';
 
 import DBConnection from './database/db.connection.js';
 import authRouter from './routes/auth.router.js';
@@ -13,6 +14,7 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT;
 
+app.use(cors());
 app.use(express.json());
 app.use(passport.initialize());
 
