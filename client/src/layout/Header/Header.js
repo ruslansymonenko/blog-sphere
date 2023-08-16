@@ -1,14 +1,17 @@
+import { Link } from 'react-router-dom';
+
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import Button from 'react-bootstrap/Button';
 
 function Header () {
   return (
     <Container>
       <Navbar expand="lg" className="bg-body-tertiary">
         <Container>
-          <Navbar.Brand href="#">Blog Sphere</Navbar.Brand>
+          <Navbar.Brand href="/">Blog Sphere</Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="/myposts">My posts</Nav.Link>
@@ -17,14 +20,17 @@ function Header () {
                 My Account
               </NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
+              <NavDropdown.Item href="/login">
                 Sing in
               </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.4">
+              <NavDropdown.Item href="register">
                 Sing up
               </NavDropdown.Item>
             </NavDropdown>
           </Nav>
+          <Button variant="outline-info">
+            <Link className="text-decoration-none text-dark fw-medium" to={'/newpost'}>New Post</Link>
+          </Button>{' '}
         </Container>
       </Navbar>
     </Container>

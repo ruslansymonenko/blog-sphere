@@ -10,6 +10,9 @@ import './App.css';
 const HomePage = lazy(() => import('./pages/HomePage/HomePage'));
 const MyPostsPage = lazy(() => import('./pages/MyPostsPage/MyPostsPage'));
 const PostPage = lazy(() => import('./pages/PostPage/PostPage'));
+const RegisterPage = lazy(() => import('./pages/RegisterPage/RegisterPage'));
+const LoginPage = lazy(() => import('./pages/LoginPage/LoginPage'));
+
 
 
 
@@ -19,6 +22,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout/>}>
           <Route index path="/" element={<HomePage/>}/>
+          <Route path="/register" element={<RegisterPage/>}/>
+          <Route path="/login" element={<LoginPage/>}/>
           <Route path="/myposts" element={<MyPostsPage/>}/>
           <Route path="/post/:id" element={<PostPage/>}/>
         </Route>

@@ -13,7 +13,7 @@ export const register = async (req, res) => {
       const user = new userSchema({
         email: req.body.email,
         password: hashPassword,
-        name: req.body.email,
+        name: req.body.name,
       });
 
       await user.save();
@@ -43,7 +43,7 @@ export const register = async (req, res) => {
       message: "This user has already registered"
     })
   }
-}
+};
 
 export const login = async (req, res) => {
   const isUser = await userSchema.findOne({email: req.body.email});
@@ -72,4 +72,33 @@ export const login = async (req, res) => {
       message: "This user is not registered"
     });
   }
-}
+};
+
+export const getMe = async (req, res) => {
+  try {
+    const user = await userSchema.findById(req.user._id);
+
+    if(!user) {
+      return res.json({
+        message: 'This user is not registered'
+      })
+    }
+
+    const token = jwttoken.sign({
+        userId: isUser._id
+      },
+      process.env.JWT_SECRET,
+      {expiresIn: '10d'}
+    );
+
+    res.status(200).json({
+        user,
+        token: `Bearer ${token}`
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      message: 'No access'
+    })
+  }
+};

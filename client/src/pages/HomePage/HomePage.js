@@ -7,7 +7,9 @@ import './HomePage.css';
 const HomePage = () => {
   return (
     <Container>
-        <Posts/>
+        <Posts
+          type={'all'}
+        />
     </Container>
   )
 }
