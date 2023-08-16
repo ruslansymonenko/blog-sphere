@@ -4,16 +4,47 @@ import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
 
 export const getAllPosts = async (req, res) => {
-  const allPosts = await postSchema.find();
+  try {
+    const allPosts = await postSchema.find();
 
-  res.status(200).json({
-    message: 'Successful connection',
-    posts: allPosts,
-  })
+    if (!allPosts) {
+      return res.json({
+        message: 'No posts . . .'
+      })
+    }
+
+    res.status(200).json({
+      message: 'Successful connection',
+      posts: allPosts,
+    });
+  } catch (error) {
+    req.status(500).json({
+      message: 'Something going wrong, please try later!'
+    })
+  }
 };
 
-export const getPost = (req, res) => {
+export const getPostById = async (req, res) => {
+  try {
+    const post = await postSchema.findOneAndUpdate({_id: req.params.id}, {
+      $inc: {views: 1},
+    });
+    
+    if (!post) {
+      return res.json({
+        message: 'Cant fin this post . . .'
+      })
+    }
 
+    res.status(200).json({
+      post: post,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: 'Something going wrong, please try later!'
+    })
+  }
 };
 
 export const addPost = async (req, res) => {

@@ -18,7 +18,10 @@ function Header () {
               </NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="#action/3.4">
-                Log in
+                Sing in
+              </NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.4">
+                Sing up
               </NavDropdown.Item>
             </NavDropdown>
           </Nav>

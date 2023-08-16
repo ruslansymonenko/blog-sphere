@@ -1,6 +1,9 @@
+import { Link } from 'react-router-dom';
+
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import { Row, Col } from 'react-bootstrap';
+import Nav from 'react-bootstrap/Nav';
 
 import { getShorterText } from '../../helpers/getShorterText';
 
@@ -30,7 +33,9 @@ const Post = ({post}) => {
             <Card.Text>
               {postShortText}
             </Card.Text>
-            <Button className="m-2" variant="info">Read post</Button>
+            <Button className="m-2" variant="info">
+              <Link className="text-decoration-none text-light" to={`/post/${post._id}`}>Read post</Link>
+            </Button>
             <Button variant="light">Like post</Button>
           </Col>
           <Col className="d-flex flex-column justify-content-around align-items-center">
