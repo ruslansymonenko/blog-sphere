@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector} from 'react-redux';
+import { toast } from 'react-toastify';
 
 import { checkIsAuth, logOut } from '../../store/slices/authSlice';
 
@@ -16,12 +17,15 @@ function Header () {
   const dispatch = useDispatch();
   
   useEffect(() => {
-
   }, [user]);
 
   const handleLogOut = () => {
     dispatch(logOut());
   };
+
+  const authNotice = () => {
+    toast.warn('Please, login first')
+  }
 
   return (
     <Container>
@@ -40,20 +44,40 @@ function Header () {
               <NavDropdown.Item href="#action/3.1">
                 My Account
               </NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="/login">
-                Sing in
-              </NavDropdown.Item>
-              <NavDropdown.Item href="register">
-                Sing up
-              </NavDropdown.Item>
+              {
+                isAuth ? (
+                  ''
+                ) : (
+                  <> 
+                    <NavDropdown.Divider />
+                    <NavDropdown.Item href="/login">
+                      Sing in
+                    </NavDropdown.Item>
+                    <NavDropdown.Item href="register">
+                      Sing up
+                    </NavDropdown.Item>
+                  </>
+                )
+              }
             </NavDropdown>
-            <Button 
-              variant="info"
-              style={{marginLeft: '20px'}}
-            >
-              <Link className="text-decoration-none text-light fw-medium" to={'/newpost'}>New Post</Link>
-            </Button>{' '}
+            {
+              isAuth ? (
+                <Button 
+                  variant="info"
+                  style={{marginLeft: '20px'}}
+                >
+                  <Link className="text-decoration-none text-light fw-medium" to={'/newpost'}>New Post</Link>
+                </Button>
+              ) : (
+                <Button 
+                  variant="secondary"
+                  style={{marginLeft: '20px'}}
+                  onClick={authNotice}
+                >
+                  New Post
+                </Button>
+              )
+            }
             {user ? (
               <Nav.Item 
                 className="d-flex align-items-center justify-content-center"

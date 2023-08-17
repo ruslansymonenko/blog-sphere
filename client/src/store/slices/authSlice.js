@@ -15,7 +15,7 @@ export const registerUser = createAsyncThunk('auth/registerUser', async ({ name,
 
     return data
   } catch (error) {
-
+    console.log(error);
   }
 });
 
@@ -53,7 +53,6 @@ export const getMe = createAsyncThunk('auth/getMe', async () => {
         return data
       }
     } catch (error) {
-      console.log(error.message)
     }
 });
 

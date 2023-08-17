@@ -22,7 +22,6 @@ const PostPage = () => {
   }, []);
 
   useEffect(() => {
-    console.log(post);
   }, [post]);
 
   return (

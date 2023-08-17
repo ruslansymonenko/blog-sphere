@@ -22,7 +22,6 @@ const Posts = ({type}) => {
   }, []);
 
   useEffect(() => {
-    console.log(posts)
   }, [posts])
 
   return (
