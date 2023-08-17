@@ -5,7 +5,7 @@ import { fileURLToPath } from 'url';
 
 export const getAllPosts = async (req, res) => {
   try {
-    const allPosts = await postSchema.find();
+    const allPosts = await postSchema.find().sort('-createdAt');
 
     if (!allPosts) {
       return res.json({
@@ -53,7 +53,7 @@ export const addPost = async (req, res) => {
       const user = await userSchema.findById(req.user._id);
 
       if(req.files) {
-        let fileName = Date.now().toString + req.files.image.name;
+        let fileName = Date.now().toString() + req.files.image.name;
         const __dirname = dirname(fileURLToPath(import.meta.url));
 
         req.files.image.mv(path.join(__dirname, '..', 'uploads', fileName));
@@ -71,7 +71,7 @@ export const addPost = async (req, res) => {
           $push: {posts: newPostWithImage}
         });
 
-        return res.status(200).json({
+        return res.json({
           message: 'Post was published'
         });
       }
@@ -89,7 +89,7 @@ export const addPost = async (req, res) => {
         $push: {posts: newPostWithoutImage}
       });
 
-      return res.status(200).json({
+      return res.json({
         message: 'Post was published'
       })
     } catch (error) {

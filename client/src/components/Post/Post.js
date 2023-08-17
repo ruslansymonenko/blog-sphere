@@ -19,13 +19,19 @@ const Post = ({post}) => {
 
   return (
     <Card className="m-2 p-0" style={{ width: '70rem' }}>
-      <div className="d-flex justify-content-center align-items-center pt-2">
-        <Card.Img
-          className="post-card__image"
-          variant="top"
-          src={post.imageSrc ? post.imageSrc : ''}
-        />
-      </div>
+      {
+        post.imageSrc ? (
+        <div className="d-flex justify-content-center align-items-center pt-2">
+          <Card.Img
+            className="post-card__image"
+            variant="top"
+            src={`http://localhost:8000/${post.imageSrc}`}
+          />
+        </div>
+        ) : (
+          ''
+        )
+      }
       <Card.Body>
         <Row>
           <Col>
