@@ -26,22 +26,29 @@ const Posts = ({type}) => {
   }, [posts])
 
   return (
-    <Col className="d-flex flex-column align-items-center w-100">
-      {
-        posts.length <= 0 ? 
-          <InfoWindow
-            message={'Sorry, there are no posts available to view at the moment.'}
-          />
-        :
-        posts.map(post => (
-          <Row key={post._id}>
-            <Post
-              post={post}
+    posts ? (
+      <Col className="d-flex flex-column align-items-center w-100">
+        {
+          posts.length <= 0 ? 
+            <InfoWindow
+              message={'Sorry, there are no posts available to view at the moment.'}
             />
-          </Row>
-        ))
-      }
-    </Col>
+          :
+          posts.map(post => (
+            <Row key={post._id}>
+              <Post
+                post={post}
+              />
+            </Row>
+          ))
+        }
+      </Col>
+    ) : (
+      <InfoWindow
+        message={'Sorry, there are no posts available to view at the moment.'}
+      />
+    )
+
   )
 }
 

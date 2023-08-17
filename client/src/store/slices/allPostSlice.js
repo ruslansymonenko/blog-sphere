@@ -6,7 +6,7 @@ export const getAllPosts = createAsyncThunk('posts/getAllPosts', async () => {
     const response = await axios.get('http://localhost:8000/posts/getAllPosts');
     return response.data
   } catch (error) {
-
+    console.log(error)
   }
 });
 
@@ -24,7 +24,7 @@ export const allPostsSlice = createSlice({
     },
     [getAllPosts.fulfilled]: (state, action) => {
       state.loading = false;
-      state.posts = action.payload.posts;
+      state.posts = action.payload?.posts;
     },
     [getAllPosts.rejected]: (state) => {
       state.loading = false;
