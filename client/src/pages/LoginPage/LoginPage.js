@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
-import { registerUser } from '../../store/slices/authSlice';
+import { loginUser } from '../../store/slices/authSlice';
 
 import { Container } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
@@ -23,7 +23,12 @@ const LoginPage = () => {
     event.preventDefault();
 
     if(email && password) {
-
+      try {
+        dispatch(loginUser({ email, password }));
+        clearForm();
+      } catch (error) {
+        toast.error(error.message);
+      }
     } else {
       toast.error('Please fill all inputs');
     }

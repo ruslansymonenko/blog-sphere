@@ -1,12 +1,28 @@
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector} from 'react-redux';
+
+import { checkIsAuth, logOut } from '../../store/slices/authSlice';
 
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Button from 'react-bootstrap/Button';
+import { useEffect } from 'react';
 
 function Header () {
+  const user = useSelector(state => state.auth.user);
+  const isAuth = useSelector(checkIsAuth);
+  const dispatch = useDispatch();
+  
+  useEffect(() => {
+
+  }, [user]);
+
+  const handleLogOut = () => {
+    dispatch(logOut());
+  };
+
   return (
     <Container>
       <Navbar expand="lg" className="bg-body-tertiary">
@@ -14,7 +30,12 @@ function Header () {
           <Navbar.Brand href="/">Blog Sphere</Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/myposts">My posts</Nav.Link>
+            {isAuth ? (
+              <Nav.Link href="/myposts">My posts</Nav.Link>
+            ) : (
+              ''
+            )
+            }
             <NavDropdown title="Account" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">
                 My Account
@@ -33,9 +54,20 @@ function Header () {
             >
               <Link className="text-decoration-none text-light fw-medium" to={'/newpost'}>New Post</Link>
             </Button>{' '}
+            {user ? (
+              <Nav.Item 
+                className="d-flex align-items-center justify-content-center"
+                style={{marginLeft: '20px'}}
+              >
+                <h2 className="fw-light fs-4">Hello, {user.name}</h2>
+              </Nav.Item>
+            ) : ''
+            }
           </Nav>
+
           <Button
             variant="dark"
+            onClick={handleLogOut}
           >
             Log out
           </Button>{' '}

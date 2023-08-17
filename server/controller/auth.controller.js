@@ -1,4 +1,5 @@
 import jwttoken from 'jsonwebtoken';
+import { ExtractJwt } from 'passport-jwt';
 
 import userSchema from "../database/scheme/user.schema.js";
 import { hidePassword, checkPassword } from "../helpers/cryptUserPassword.js";
@@ -34,12 +35,12 @@ export const register = async (req, res) => {
 
     } catch (err) {
       console.log('error');
-      res.status(209).json({
+      res.json({
         message: err.message,
       });
     }
   } else {
-    res.status(409).json({
+    res.json({
       message: "This user has already registered"
     })
   }
@@ -59,16 +60,18 @@ export const login = async (req, res) => {
       {expiresIn: '10d'}
       );
 
-      res.status(200).json({
-        token: `Bearer ${token}`
+      res.json({
+        token: `Bearer ${token}`,
+        message: 'You are logged in',
+        user: isUser
       });
     } else {
-      res.status(401).json({
+      res.json({
         message: "Wrong password"
       });
     }
   } else {
-    res.status(404).json({
+    res.json({
       message: "This user is not registered"
     });
   }
@@ -85,19 +88,19 @@ export const getMe = async (req, res) => {
     }
 
     const token = jwttoken.sign({
-        userId: isUser._id
+        userId: user._id
       },
       process.env.JWT_SECRET,
       {expiresIn: '10d'}
     );
 
-    res.status(200).json({
+    res.json({
         user,
         token: `Bearer ${token}`
     });
 
   } catch (error) {
-    res.status(500).json({
+    res.json({
       message: 'No access'
     })
   }
