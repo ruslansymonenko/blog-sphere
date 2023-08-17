@@ -1,8 +1,9 @@
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+
 
 import { registerUser } from '../../store/slices/authSlice';
-
 import authFormValidation from '../../helpers/authFormValidation';
 
 import { Container } from 'react-bootstrap';
@@ -13,6 +14,7 @@ const RegisterPage = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const {status} = useSelector(state => state.auth);
   const dispatch = useDispatch();
 
   const clearForm = () => {
@@ -31,11 +33,10 @@ const RegisterPage = () => {
         dispatch(registerUser({name, email, password}));
         clearForm();
       } catch (error) {
-        console.log(error)
+        toast.error(error.message);
       }
     } else {
-      console.log('No');
-      console.log(formValidation.message);
+      toast.error(formValidation.message);
     }
   };
 
@@ -44,9 +45,14 @@ const RegisterPage = () => {
     clearForm();
   };
 
+  useEffect(() => {
+    toast(status);
+  }, [status]);
+
   return (
     <Container>
       <Form>
+        <h2 className="mb-4">Registration</h2>
         <Form.Group className="mb-3">
           <Form.Label>Name</Form.Label>
           <Form.Control
@@ -80,7 +86,7 @@ const RegisterPage = () => {
         </Form.Group>
         <Button 
           className="m-2" 
-          variant="primary" 
+          variant="info" 
           type="submit"
           onClick={handleSubmit}
         >

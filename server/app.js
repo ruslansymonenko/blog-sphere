@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import passport from 'passport';
 import cors from 'cors';
 
+
 import DBConnection from './database/db.connection.js';
 import authRouter from './routes/auth.router.js';
 import postsRouter from './routes/posts.route.js';

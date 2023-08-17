@@ -1,5 +1,7 @@
 import { lazy } from "react";
 import { Route, Routes } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -13,9 +15,6 @@ const PostPage = lazy(() => import('./pages/PostPage/PostPage'));
 const RegisterPage = lazy(() => import('./pages/RegisterPage/RegisterPage'));
 const LoginPage = lazy(() => import('./pages/LoginPage/LoginPage'));
 
-
-
-
 function App() {
   return (
     <div className="App">
@@ -28,6 +27,8 @@ function App() {
           <Route path="/post/:id" element={<PostPage/>}/>
         </Route>
       </Routes>
+
+      <ToastContainer position="bottom-right"/>
     </div>
   );
 }

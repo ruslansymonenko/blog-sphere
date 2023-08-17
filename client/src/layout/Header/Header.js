@@ -27,9 +27,17 @@ function Header () {
                 Sing up
               </NavDropdown.Item>
             </NavDropdown>
+            <Button 
+              variant="info"
+              style={{marginLeft: '20px'}}
+            >
+              <Link className="text-decoration-none text-light fw-medium" to={'/newpost'}>New Post</Link>
+            </Button>{' '}
           </Nav>
-          <Button variant="outline-info">
-            <Link className="text-decoration-none text-dark fw-medium" to={'/newpost'}>New Post</Link>
+          <Button
+            variant="dark"
+          >
+            Log out
           </Button>{' '}
         </Container>
       </Navbar>
