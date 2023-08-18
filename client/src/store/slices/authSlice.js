@@ -39,7 +39,6 @@ export const loginUser = createAsyncThunk('auth/loginUser', async ({ email, pass
 export const getMe = createAsyncThunk('auth/getMe', async () => {
     let token = '';
     if(localStorage.getItem('token')) {
-      console.log(token)
       token = localStorage.getItem('token');
     }
 

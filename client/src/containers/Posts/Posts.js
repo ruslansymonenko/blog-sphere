@@ -2,6 +2,7 @@ import { Col, Row } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { getAllPosts } from '../../store/slices/allPostSlice';
+import { likePost } from '../../store/slices/postSlice';
 
 import Post from '../../components/Post/Post';
 import Loader from '../../components/Loader/Loader';
@@ -13,6 +14,10 @@ const Posts = ({type}) => {
   const dispatch = useDispatch();
   const posts = useSelector((state) => state.allPosts.posts);
 
+  const handleLikePost = (postId) => {
+    dispatch(likePost(postId));
+  }
+
   useEffect(() => {
     if(type === 'all') {
       dispatch(getAllPosts());
@@ -22,7 +27,7 @@ const Posts = ({type}) => {
   }, []);
 
   useEffect(() => {
-  }, [posts])
+  }, [posts]);
 
   return (
     posts ? (
@@ -37,6 +42,7 @@ const Posts = ({type}) => {
             <Row key={post._id}>
               <Post
                 post={post}
+                likeFunction={handleLikePost}
               />
             </Row>
           ))

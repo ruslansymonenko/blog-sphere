@@ -9,7 +9,7 @@ import likeImg from '../../assets/icons/like-icon.svg';
 import viewsImg from '../../assets/icons/eye-icon.svg';
 import commentImg from '../../assets/icons/comment-icon.svg';
 
-const DetailedPost = ({post}) => {
+const DetailedPost = ({post, likeFunction}) => {
   return (
     <Container>
       <Row>
@@ -35,7 +35,12 @@ const DetailedPost = ({post}) => {
                   <Card.Text>
                     {post.text}
                   </Card.Text>
-                  <Button variant="light">Like post</Button>
+                  <Button 
+                    variant="light"
+                    onClick={() => likeFunction(post._id)}
+                  >
+                    Like post
+                  </Button>
                 </Col>
                 <Col className="d-flex flex-column justify-content-around align-items-center">
                   <Row className="w-100">

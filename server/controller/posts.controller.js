@@ -97,8 +97,14 @@ export const addPost = async (req, res) => {
     }
 };
 
-export const likePost = (req, res) => {
-
+export const likePost = async (req, res) => {
+  try {
+    const post = await postSchema.findByIdAndUpdate({ _id: req.body.id }, {
+      $inc: {likes: 1}
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const deletePost = (req, res) => {

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Route, Routes, Navigate } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer } from 'react-toastify';
@@ -10,18 +10,33 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
 import Layout from "./layout/Layout";
+import Loader from "./components/Loader/Loader";
 
 
 function App() {
   const dispatch = useDispatch();
+  const isLoading = useSelector(state => state.auth.isLoading);
   const isAuth = useSelector(checkIsAuth);
 
   const PrivateRoute = ({children}) => {
-    return isAuth ? children : <Navigate to="/"/>
+    const [authenticated, setAuthenticated] = useState(null);
+
+    useEffect(() => {
+      if (!isLoading) {
+        setAuthenticated(isAuth);
+      }
+    }, [isLoading, isAuth]);
+
+    if (isLoading || authenticated === null) {
+      return <Loader />;
+    }
+
+    return authenticated ? children : <Navigate to="/" />;
+    // return isAuth ? children : <Navigate to="/"/>
   }
 
   useEffect(() => {
-    dispatch(getMe());
+    dispatch(getMe())
   }, [dispatch]);
 
   return (

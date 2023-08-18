@@ -11,7 +11,7 @@ router.get('/getpost/:id', getPostById);
 
 router.post('/addpost', passport.authenticate('jwt', {session: false}), addPost);
 
-router.post('/likepost', likePost);
+router.patch('/likepost', likePost);
 
 router.delete('/deletepost', deletePost);
 

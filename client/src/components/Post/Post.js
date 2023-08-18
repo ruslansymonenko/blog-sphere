@@ -13,8 +13,9 @@ import userImg from '../../assets/icons/user-icon.svg';
 import likeImg from '../../assets/icons/like-icon.svg';
 import viewsImg from '../../assets/icons/eye-icon.svg';
 import commentImg from '../../assets/icons/comment-icon.svg';
+import { likePost } from '../../store/slices/postSlice';
 
-const Post = ({post}) => {
+const Post = ({post, likeFunction}) => {
   const postShortText = getShorterText(post.text, 7);
 
   return (
@@ -42,7 +43,12 @@ const Post = ({post}) => {
             <Button className="m-2" variant="info">
               <Link className="text-decoration-none text-light" to={`/post/${post._id}`}>Read post</Link>
             </Button>
-            <Button variant="light">Like post</Button>
+            <Button 
+              variant="light"
+              onClick={() => likeFunction(post._id)}
+            >
+              Like post
+            </Button>
           </Col>
           <Col className="d-flex flex-column justify-content-around align-items-center">
             <Row className="w-100">

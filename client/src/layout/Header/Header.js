@@ -20,7 +20,11 @@ function Header () {
   }, [user]);
 
   const handleLogOut = () => {
-    dispatch(logOut());
+    if (isAuth) {
+      dispatch(logOut());
+    } else {
+      toast.warn('Log in first.');
+    }
   };
 
   const authNotice = () => {
@@ -94,7 +98,7 @@ function Header () {
             onClick={handleLogOut}
           >
             Log out
-          </Button>{' '}
+          </Button>
         </Container>
       </Navbar>
     </Container>
