@@ -10,8 +10,25 @@ export const getAllPosts = createAsyncThunk('posts/getAllPosts', async () => {
   }
 });
 
-export const allPostsSlice = createSlice({
-  name: 'allPosts',
+export const getMyPosts = createAsyncThunk('posts/getMyPosts', async () => {
+  let token = '';
+  if(localStorage.getItem('token')) {
+    token = localStorage.getItem('token');
+  }
+  try{
+    const response = await axios.get('http://localhost:8000/posts/getMyPosts', {
+      headers: {
+        Authorization: token,
+      }
+    });
+    return response.data
+  } catch (error) {
+    console.log(error)
+  }
+});
+
+export const getPostsSlice = createSlice({
+  name: 'getPosts',
   initialState: {
     posts: [],
     loading: false, 
@@ -36,11 +53,21 @@ export const allPostsSlice = createSlice({
     },
     [getAllPosts.rejected]: (state) => {
       state.loading = false;
+    },
+    [getMyPosts.pending]: (state) => {
+      state.loading = true;
+    },
+    [getMyPosts.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.posts = action.payload?.posts;
+    },
+    [getMyPosts.rejected]: (state) => {
+      state.loading = false;
     }
   }
 });
 
-export const { updateLikedPost } = allPostsSlice.actions;
+export const { updateLikedPost } = getPostsSlice.actions;
 
-export default allPostsSlice.reducer;
+export default getPostsSlice.reducer;
 

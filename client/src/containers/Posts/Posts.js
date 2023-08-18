@@ -2,9 +2,9 @@ import { Col, Row } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import useSocket from '../../hooks/useSocket';
-import { getAllPosts } from '../../store/slices/allPostSlice';
+import { getAllPosts, getMyPosts } from '../../store/slices/getPostSlice';
 import { likePost } from '../../store/slices/postSlice';
-import { updateLikedPost } from '../../store/slices/allPostSlice';
+import { updateLikedPost } from '../../store/slices/getPostSlice';
 
 import Post from '../../components/Post/Post';
 import InfoWindow from '../../components/InfoWindow/InfoWindow';
@@ -13,7 +13,7 @@ const Posts = ({type}) => {
   const serverURL = 'http://localhost:8000';
   const socket = useSocket(serverURL);
   const dispatch = useDispatch();
-  const posts = useSelector((state) => state.allPosts.posts);
+  const posts = useSelector((state) => state.getPosts.posts);
 
   const handleLikePost = (postId) => {
     dispatch(likePost(postId));
@@ -23,7 +23,7 @@ const Posts = ({type}) => {
     if(type === 'all') {
       dispatch(getAllPosts());
     } else if (type === 'user') {
-      
+      dispatch(getMyPosts());
     }
   }, []);
 

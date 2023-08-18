@@ -25,6 +25,29 @@ export const getAllPosts = async (req, res) => {
   }
 };
 
+export const getMyPosts = async (req, res) => {
+  try {
+    const myPosts = await postSchema.find({
+      author: req.user._id
+    }).sort('-createdAt');
+
+    if (!myPosts) {
+      return res.json({
+        message: 'No posts . . .'
+      })
+    }
+
+    res.status(200).json({
+      message: 'Successful connection',
+      posts: myPosts,
+    });
+  } catch (error) {
+    req.status(500).json({
+      message: 'Something going wrong, please try later!'
+    })
+  }
+};
+
 export const getPostById = async (req, res) => {
   try {
     const post = await postSchema.findOneAndUpdate({_id: req.params.id}, {
