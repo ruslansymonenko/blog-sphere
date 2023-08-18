@@ -1,8 +1,8 @@
-
+import { Container } from "react-bootstrap";
 
 const MyAccountPage = () => {
   return (
-    <div>MyAccountPage</div>
+    <Container>MyAccountPage</Container>
   )
 }
 

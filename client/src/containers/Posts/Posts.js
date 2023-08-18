@@ -1,16 +1,17 @@
 import { Col, Row } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import useSocket from '../../hooks/useSocket';
 import { getAllPosts } from '../../store/slices/allPostSlice';
 import { likePost } from '../../store/slices/postSlice';
+import { updateLikedPost } from '../../store/slices/allPostSlice';
 
 import Post from '../../components/Post/Post';
-import Loader from '../../components/Loader/Loader';
 import InfoWindow from '../../components/InfoWindow/InfoWindow';
 
-import testImg from '../../assets/test-images/test-img.jpg';
-
 const Posts = ({type}) => {
+  const serverURL = 'http://localhost:8000';
+  const socket = useSocket(serverURL);
   const dispatch = useDispatch();
   const posts = useSelector((state) => state.allPosts.posts);
 
@@ -26,8 +27,15 @@ const Posts = ({type}) => {
     }
   }, []);
 
+
   useEffect(() => {
-  }, [posts]);
+    if (socket) {
+      // Listen for 'like-post' event
+      socket.on('like-post', (updatedPost) => {
+        dispatch(updateLikedPost(updatedPost));
+      });
+    }
+  }, [socket, dispatch]);
 
   return (
     posts ? (

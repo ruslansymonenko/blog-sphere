@@ -6,6 +6,7 @@ const PostPage = lazy(() => import('../pages/PostPage/PostPage'));
 const NewPostPage = lazy(() => import('../pages/NewPostPage/NewPostPage'));
 const RegisterPage = lazy(() => import('../pages/RegisterPage/RegisterPage'));
 const LoginPage = lazy(() => import('../pages/LoginPage/LoginPage'));
+const MyAccountPage = lazy(() => import('../pages/MyAccountPage/MyAccountPage'));
 
 export const routes = [
   {
@@ -36,6 +37,11 @@ export const routes = [
   {
     path: '/newpost',
     element: <NewPostPage/>,
+    private: true,
+  },
+  {
+    path: '/myaccount',
+    element: <MyAccountPage/>,
     private: true,
   },
 ];

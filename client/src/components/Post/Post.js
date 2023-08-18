@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
 
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import { Row, Col } from 'react-bootstrap';
-import Nav from 'react-bootstrap/Nav';
 
 import { getShorterText } from '../../helpers/getShorterText';
 
@@ -11,12 +11,26 @@ import './Post.css';
 
 import userImg from '../../assets/icons/user-icon.svg';
 import likeImg from '../../assets/icons/like-icon.svg';
+import likeImgRed from '../../assets/icons/like-icon-red.svg';
 import viewsImg from '../../assets/icons/eye-icon.svg';
 import commentImg from '../../assets/icons/comment-icon.svg';
-import { likePost } from '../../store/slices/postSlice';
 
 const Post = ({post, likeFunction}) => {
   const postShortText = getShorterText(post.text, 7);
+  const [updatedLike, setUpdatedLike] = useState(false);
+  const isInitialRender = useRef(true);
+
+  useEffect(() => {
+    if (isInitialRender.current) {
+      // Skip the effect for the initial render
+      isInitialRender.current = false;
+    } else {
+      setUpdatedLike(true);
+      setTimeout(() => {
+        setUpdatedLike(false);
+      }, 700);
+    }
+  }, [post]);
 
   return (
     <Card className="m-2 p-0" style={{ width: '70rem' }}>
@@ -73,7 +87,11 @@ const Post = ({post, likeFunction}) => {
             </Row>
             <Row className="w-100">
               <Col className="d-flex justify-content-end align-items-center">
-                <img className="card-icon" src={likeImg} alt="likes" />
+                <img 
+                  className={`card-icon ${updatedLike ? 'bounce' : ''}`}
+                  src={`${updatedLike ? likeImgRed : likeImg}`} 
+                  alt="likes" 
+                />
               </Col>
               <Col>
                 <span className="d-block">

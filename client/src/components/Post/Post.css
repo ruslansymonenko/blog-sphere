@@ -6,3 +6,18 @@
   height: 20px;
 }
 
+@keyframes bounceUp {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px) scale(1.5);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+.card-icon.bounce {
+  animation: bounceUp 0.6s ease-in-out;
+}

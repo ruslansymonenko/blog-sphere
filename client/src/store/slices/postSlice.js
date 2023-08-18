@@ -26,7 +26,8 @@ export const postSlice = createSlice({
     loading: false,
     status: null,
   },
-  reducers: {},
+  reducers: {
+  },
   extraReducers: {
     [createPost.pending]: (state) => {
       state.loading = true

@@ -45,9 +45,13 @@ function Header () {
             )
             }
             <NavDropdown title="Account" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">
-                My Account
-              </NavDropdown.Item>
+              {
+                isAuth ? (
+                <NavDropdown.Item href="/myaccount">
+                  My Account
+                </NavDropdown.Item>
+                ) : ('')
+              }
               {
                 isAuth ? (
                   ''

@@ -1,5 +1,6 @@
 import postSchema from "../database/scheme/post.schema.js";
 import userSchema from "../database/scheme/user.schema.js";
+import { getSocketIOInstance } from '../utils/socketIOInstanse.js';
 import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -98,10 +99,16 @@ export const addPost = async (req, res) => {
 };
 
 export const likePost = async (req, res) => {
-  try {
-    const post = await postSchema.findByIdAndUpdate({ _id: req.body.id }, {
-      $inc: {likes: 1}
-    });
+  try{
+    const io = getSocketIOInstance();
+    const updatedPost = await postSchema.findOneAndUpdate(
+      { _id: req.body.id },
+      { $inc: { likes: 1 } },
+      { new: true } // Fetch the updated post
+    );
+    
+    io.emit('like-post', updatedPost);
+
   } catch (error) {
     console.log(error);
   }

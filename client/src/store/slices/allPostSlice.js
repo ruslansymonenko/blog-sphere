@@ -17,7 +17,15 @@ export const allPostsSlice = createSlice({
     loading: false, 
     error: null,
   },
-  reducers: {},
+  reducers: {
+    updateLikedPost: (state, action) => {
+      const updatedPost = action.payload;
+      const postIndex = state.posts.findIndex(post => post._id === updatedPost._id);
+      if (postIndex !== -1) {
+        state.posts[postIndex] = updatedPost;
+      }
+    },
+  },
   extraReducers: {
     [getAllPosts.pending]: (state) => {
       state.loading = true;
@@ -32,6 +40,7 @@ export const allPostsSlice = createSlice({
   }
 });
 
+export const { updateLikedPost } = allPostsSlice.actions;
 
 export default allPostsSlice.reducer;
 

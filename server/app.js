@@ -3,6 +3,8 @@ import dotenv from 'dotenv';
 import passport from 'passport';
 import cors from 'cors';
 import fileUpload from 'express-fileupload';
+import { Server } from 'socket.io';
+import { initializeSocketIO } from './utils/socketIOInstanse.js';
 
 
 import DBConnection from './database/db.connection.js';
@@ -29,8 +31,19 @@ passportCheck(passport);
 app.use('/auth', authRouter);
 app.use('/posts', postsRouter);
 
-app.listen(PORT, () => {
+const httpServer = app.listen(PORT, () => {
   console.log(`Server was started on port ${PORT} . . .`);
 });
 
 DBConnection();
+initializeSocketIO(httpServer);
+
+// const io = new Server(httpServer, {
+//   cors: {
+//     origin: "http://localhost:3000"
+//   }
+// });
+
+// io.on("connection", (socket) => {
+//   console.log('The user connected');
+// });
