@@ -6,6 +6,12 @@
   height: 20px;
 }
 
+.delete-btn {
+  position: absolute;
+  top: 5%;
+  right: 5%;
+}
+
 @keyframes bounceUp {
   0%, 20%, 50%, 80%, 100% {
     transform: translateY(0);

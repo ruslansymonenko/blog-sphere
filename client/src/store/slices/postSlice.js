@@ -17,7 +17,16 @@ export const likePost = createAsyncThunk('post/likePost', async (id) => {
   } catch (error) {
     console.log(error);
   }
-})
+});
+
+export const deletePost = createAsyncThunk('post/deletePost', async (id) => {
+  try {
+    const {data} = await axios.delete(`/posts/deletepost?id=${id}`);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 export const postSlice = createSlice({
   name: 'post',
@@ -49,6 +58,17 @@ export const postSlice = createSlice({
       state.status = null;
     },
     [likePost.rejected]: (state) => {
+      state.loading = false
+      state.status = null
+    },
+    [deletePost.pending]: (state) => {
+      state.loading = true
+    },
+    [deletePost.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.status = null;
+    },
+    [deletePost.rejected]: (state) => {
       state.loading = false
       state.status = null
     },

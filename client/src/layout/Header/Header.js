@@ -35,11 +35,17 @@ function Header () {
     <Container>
       <Navbar expand="lg" className="bg-body-tertiary">
         <Container>
-          <Navbar.Brand href="/">Blog Sphere</Navbar.Brand>
+          <Navbar.Brand>
+            <Link className="text-decoration-none text-dark" to={"/"}>Blog Sphere</Link>
+          </Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link href="/">Home</Nav.Link>
+            <Nav.Link>
+              <Link className="text-decoration-none text-secondary" to={"/"}>Home</Link>
+            </Nav.Link>
             {isAuth ? (
-              <Nav.Link href="/myposts">My posts</Nav.Link>
+              <Nav.Link>
+                <Link className="text-decoration-none text-secondary" to={"/myposts"}>My posts</Link>
+              </Nav.Link>
             ) : (
               ''
             )
@@ -47,8 +53,8 @@ function Header () {
             <NavDropdown title="Account" id="basic-nav-dropdown">
               {
                 isAuth ? (
-                <NavDropdown.Item href="/myaccount">
-                  My Account
+                <NavDropdown.Item>
+                  <Link className="text-decoration-none text-secondary" to={"/myaccount"}>My account</Link>
                 </NavDropdown.Item>
                 ) : ('')
               }
@@ -58,11 +64,11 @@ function Header () {
                 ) : (
                   <> 
                     <NavDropdown.Divider />
-                    <NavDropdown.Item href="/login">
-                      Sing in
+                    <NavDropdown.Item>
+                      <Link className="text-decoration-none text-secondary" to={"/login"}>Login</Link>
                     </NavDropdown.Item>
-                    <NavDropdown.Item href="register">
-                      Sing up
+                    <NavDropdown.Item>
+                      <Link className="text-decoration-none text-secondary" to={"/register"}>Registration</Link>
                     </NavDropdown.Item>
                   </>
                 )

@@ -15,6 +15,6 @@ router.post('/addpost', passport.authenticate('jwt', {session: false}), addPost)
 
 router.patch('/likepost', likePost);
 
-router.delete('/deletepost', deletePost);
+router.delete('/deletepost', passport.authenticate('jwt', {session: false}), deletePost);
 
 export default router;

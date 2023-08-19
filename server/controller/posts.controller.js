@@ -138,5 +138,5 @@ export const likePost = async (req, res) => {
 };
 
 export const deletePost = (req, res) => {
-
+  console.log(req.body);
 };

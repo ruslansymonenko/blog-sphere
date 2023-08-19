@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import useSocket from '../../hooks/useSocket';
 import { getAllPosts, getMyPosts } from '../../store/slices/getPostSlice';
-import { likePost } from '../../store/slices/postSlice';
+import { likePost, deletePost } from '../../store/slices/postSlice';
 import { updateLikedPost } from '../../store/slices/getPostSlice';
 
 import Post from '../../components/Post/Post';
@@ -17,6 +17,10 @@ const Posts = ({type}) => {
 
   const handleLikePost = (postId) => {
     dispatch(likePost(postId));
+  }
+
+  const handleDeletePost = (postId) => {
+    dispatch(deletePost(postId));
   }
 
   useEffect(() => {
@@ -51,6 +55,8 @@ const Posts = ({type}) => {
               <Post
                 post={post}
                 likeFunction={handleLikePost}
+                type={type}
+                deleteFunction={handleDeletePost}
               />
             </Row>
           ))

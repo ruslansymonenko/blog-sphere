@@ -15,10 +15,11 @@ import likeImgRed from '../../assets/icons/like-icon-red.svg';
 import viewsImg from '../../assets/icons/eye-icon.svg';
 import commentImg from '../../assets/icons/comment-icon.svg';
 
-const Post = ({post, likeFunction}) => {
+const Post = ({post, likeFunction, type, deleteFunction}) => {
   const postShortText = getShorterText(post.text, 7);
   const [updatedLike, setUpdatedLike] = useState(false);
   const isInitialRender = useRef(true);
+  const [privatePost, setPrivatePost] = useState(false);
 
   useEffect(() => {
     if (isInitialRender.current) {
@@ -32,8 +33,29 @@ const Post = ({post, likeFunction}) => {
     }
   }, [post]);
 
+  useEffect(() => {
+    if(type === 'all') {
+      setPrivatePost(false);
+    } else if (type === 'user') {
+      setPrivatePost(true);
+    }
+  }, []);
+
   return (
     <Card className="m-2 p-0" style={{ width: '70rem' }}>
+      {
+        privatePost ? (
+          <Button 
+            className="delete-btn" 
+            variant="danger"
+            onClick={() => deleteFunction(post._id)}
+          >
+            Delete
+          </Button>
+        ) : (
+          ''
+        )
+      }
       {
         post.imageSrc ? (
         <div className="d-flex justify-content-center align-items-center pt-2">
