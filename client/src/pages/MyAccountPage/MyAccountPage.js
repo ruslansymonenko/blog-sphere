@@ -1,8 +1,13 @@
+import Account from "../../containers/Account/Account";
+
 import { Container } from "react-bootstrap";
 
-const MyAccountPage = () => {
+
+const MyAccountPage = ({user}) => {
   return (
-    <Container>MyAccountPage</Container>
+    <Container>
+      <Account/>
+    </Container>
   )
 }
 

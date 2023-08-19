@@ -1,0 +1,5 @@
+.account__user-img{
+  width: 150px;
+  object-fit: cover;
+  object-position: center;
+}

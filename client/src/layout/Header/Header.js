@@ -7,7 +7,8 @@ import { checkIsAuth, logOut } from '../../store/slices/authSlice';
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
-import NavDropdown from 'react-bootstrap/NavDropdown';
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
 import Button from 'react-bootstrap/Button';
 import { useEffect } from 'react';
 
@@ -39,41 +40,36 @@ function Header () {
             <Link className="text-decoration-none text-dark" to={"/"}>Blog Sphere</Link>
           </Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link>
+            <Nav.Item className="d-flex flex-column align-items-center justify-content-center m-1">
               <Link className="text-decoration-none text-secondary" to={"/"}>Home</Link>
-            </Nav.Link>
+            </Nav.Item>
             {isAuth ? (
-              <Nav.Link>
-                <Link className="text-decoration-none text-secondary" to={"/myposts"}>My posts</Link>
-              </Nav.Link>
+              <>
+                <Nav.Item className="d-flex flex-column align-items-center justify-content-center m-1">
+                  <Link className="text-decoration-none text-secondary" to={"/myposts"}>My posts</Link>
+                </Nav.Item>
+                <Nav.Item className="d-flex flex-column align-items-center justify-content-center m-1">
+                  <Link className="text-decoration-none text-secondary" to={"/myaccount"}>My account</Link>
+                </Nav.Item>
+              </>
             ) : (
               ''
             )
             }
-            <NavDropdown title="Account" id="basic-nav-dropdown">
-              {
-                isAuth ? (
-                <NavDropdown.Item>
-                  <Link className="text-decoration-none text-secondary" to={"/myaccount"}>My account</Link>
-                </NavDropdown.Item>
-                ) : ('')
-              }
-              {
-                isAuth ? (
-                  ''
-                ) : (
-                  <> 
-                    <NavDropdown.Divider />
-                    <NavDropdown.Item>
-                      <Link className="text-decoration-none text-secondary" to={"/login"}>Login</Link>
-                    </NavDropdown.Item>
-                    <NavDropdown.Item>
-                      <Link className="text-decoration-none text-secondary" to={"/register"}>Registration</Link>
-                    </NavDropdown.Item>
-                  </>
-                )
-              }
-            </NavDropdown>
+            {
+              isAuth ? (
+                ''
+              ) : (
+                <> 
+                  <Nav.Item className="d-flex flex-column align-items-center justify-content-center m-1">
+                    <Link className="text-decoration-none text-secondary" to={"/login"}>Login</Link>
+                  </Nav.Item>
+                  <Nav.Item className="d-flex flex-column align-items-center justify-content-center m-1">
+                    <Link className="text-decoration-none text-secondary" to={"/register"}>Registration</Link>
+                  </Nav.Item>
+                </>
+              )
+            }
             {
               isAuth ? (
                 <Button 
