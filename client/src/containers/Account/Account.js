@@ -1,3 +1,8 @@
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
+
+import { dateFormatter } from '../../helpers/dateFormatter';
+
 import Card from 'react-bootstrap/Card';
 import { Row, Col } from 'react-bootstrap';
 import Image from 'react-bootstrap/Image';
@@ -7,6 +12,20 @@ import './Account.css';
 import unknownUserImage from '../../assets/icons/unknown-user.png';
 
 const Account = () => {
+  const userData = useSelector(state => state.auth.user);
+  const [registerDate, setRegisterDate] = useState('');
+  const [postsAmount, setPostsAmount] = useState(0);
+
+  useEffect(() => {
+    if(userData) {
+      let userRegisterDate = dateFormatter(userData.createdAt);
+
+      setRegisterDate(userRegisterDate);
+      setPostsAmount(userData.posts.length);
+      console.log(userData);
+    }
+  }, [userData]);
+
   return (
     <Card.Body 
       className="bg-light p-4"
@@ -27,13 +46,13 @@ const Account = () => {
           <Row className="w-100 mb-1">
             <Col>Registration date:</Col>
             <Col className="d-flex justify-content-end">
-              18.08.2023
+              {registerDate}
             </Col>
           </Row>
           <Row className="w-100 mb-1">
             <Col>Posts:</Col>
             <Col className="d-flex justify-content-end">
-              3
+              {postsAmount}
             </Col>
           </Row>
           <Row className="w-100 mb-1">
@@ -46,6 +65,12 @@ const Account = () => {
             <Col>Views:</Col>
             <Col className="d-flex justify-content-end">
               35
+            </Col>
+          </Row>
+          <Row className="w-100 mb-1">
+            <Col>Comments:</Col>
+            <Col className="d-flex justify-content-end">
+              0
             </Col>
           </Row>
         </Col>
