@@ -67,11 +67,15 @@ export const postSlice = createSlice({
       state.status = null;
     },
     updateLikedPost: (state, action) => {
-    const updatedPost = action.payload;
-    const postIndex = state.posts.findIndex(post => post._id === updatedPost._id);
-    if (postIndex !== -1) {
-      state.posts[postIndex] = updatedPost;
-    }
+      const updatedPost = action.payload;
+      const postIndex = state.posts.findIndex(post => post._id === updatedPost._id);
+      if (postIndex !== -1) {
+        state.posts[postIndex] = updatedPost;
+      }
+    },
+    removeDeletedPost: (state, action) => {
+      const deletedPost = action.payload;
+      state.posts = state.posts.filter(post => post._id !== deletedPost);
     },
   },
   extraReducers: {
@@ -136,7 +140,7 @@ export const postSlice = createSlice({
   },
 });
 
-export const { clearStatus, updateLikedPost } = postSlice.actions;
+export const { clearStatus, updateLikedPost, removeDeletedPost } = postSlice.actions;
 
 export default postSlice.reducer;
 

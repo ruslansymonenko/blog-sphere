@@ -1,9 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState, useLayoutEffect } from 'react';
 import useSocket from '../../hooks/useSocket';
-import { getAllPosts, getMyPosts ,updateLikedPost } from '../../store/slices/postSlice';
-import { likePost, deletePost } from '../../store/slices/postSlice';
-// import { updateLikedPost } from '../../store/slices/getPostSlice';
+import { getAllPosts, getMyPosts ,updateLikedPost, likePost, deletePost, removeDeletedPost } from '../../store/slices/postSlice';
 import { toast } from 'react-toastify';
 import { clearStatus } from '../../store/slices/postSlice';
 
@@ -27,6 +25,7 @@ const Posts = ({type}) => {
 
   const handleDeletePost = (postId) => {
     dispatch(deletePost(postId));
+    dispatch(removeDeletedPost(postId));
   }
 
   useEffect(() => {
