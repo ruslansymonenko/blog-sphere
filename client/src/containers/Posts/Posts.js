@@ -1,19 +1,25 @@
-import { Col, Row } from 'react-bootstrap';
 import { useSelector, useDispatch } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useLayoutEffect } from 'react';
 import useSocket from '../../hooks/useSocket';
-import { getAllPosts, getMyPosts } from '../../store/slices/getPostSlice';
+import { getAllPosts, getMyPosts ,updateLikedPost } from '../../store/slices/postSlice';
 import { likePost, deletePost } from '../../store/slices/postSlice';
-import { updateLikedPost } from '../../store/slices/getPostSlice';
+// import { updateLikedPost } from '../../store/slices/getPostSlice';
+import { toast } from 'react-toastify';
+import { clearStatus } from '../../store/slices/postSlice';
 
 import Post from '../../components/Post/Post';
 import InfoWindow from '../../components/InfoWindow/InfoWindow';
 
+import { Col, Row } from 'react-bootstrap';
+
 const Posts = ({type}) => {
   const serverURL = 'http://localhost:8000';
   const socket = useSocket(serverURL);
+  const posts = useSelector((state) => state.post.posts);
+  const { status } = useSelector(state => state.post);
+  const [shouldDisplayToast, setShouldDisplayToast] = useState(false);
+
   const dispatch = useDispatch();
-  const posts = useSelector((state) => state.getPosts.posts);
 
   const handleLikePost = (postId) => {
     dispatch(likePost(postId));
@@ -40,6 +46,18 @@ const Posts = ({type}) => {
       });
     }
   }, [socket, dispatch]);
+
+  useLayoutEffect(() => {
+    dispatch(clearStatus());
+    setShouldDisplayToast(true);
+  }, []);
+
+  useEffect(() => {
+    if (status !== null && shouldDisplayToast) {
+      toast.info(status);
+      dispatch(clearStatus());
+    }
+  }, [status, shouldDisplayToast, dispatch]);
 
   return (
     posts ? (

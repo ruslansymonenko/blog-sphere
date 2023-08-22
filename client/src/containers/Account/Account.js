@@ -22,7 +22,6 @@ const Account = () => {
 
       setRegisterDate(userRegisterDate);
       setPostsAmount(userData.posts.length);
-      console.log(userData);
     }
   }, [userData]);
 

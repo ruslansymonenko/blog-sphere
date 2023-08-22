@@ -21,10 +21,36 @@ export const likePost = createAsyncThunk('post/likePost', async (id) => {
 
 export const deletePost = createAsyncThunk('post/deletePost', async (id) => {
   try {
-    const {data} = await axios.delete(`/posts/deletepost?id=${id}`);
+    const {data} = await axios.post(`/posts/deletepost`, {id});
     return data;
   } catch (error) {
     console.log(error);
+  }
+});
+
+export const getAllPosts = createAsyncThunk('posts/getAllPosts', async () => {
+  try{
+    const response = await axios.get('posts/getAllPosts');
+    return response.data
+  } catch (error) {
+    console.log(error)
+  }
+});
+
+export const getMyPosts = createAsyncThunk('posts/getMyPosts', async () => {
+  let token = '';
+  if(localStorage.getItem('token')) {
+    token = localStorage.getItem('token');
+  }
+  try{
+    const response = await axios.get('http://localhost:8000/posts/getMyPosts', {
+      headers: {
+        Authorization: token,
+      }
+    });
+    return response.data
+  } catch (error) {
+    console.log(error)
   }
 });
 
@@ -34,22 +60,34 @@ export const postSlice = createSlice({
     posts: [],
     loading: false,
     status: null,
+    error: null,
   },
   reducers: {
+    clearStatus: (state) => {
+      state.status = null;
+    },
+    updateLikedPost: (state, action) => {
+    const updatedPost = action.payload;
+    const postIndex = state.posts.findIndex(post => post._id === updatedPost._id);
+    if (postIndex !== -1) {
+      state.posts[postIndex] = updatedPost;
+    }
+    },
   },
   extraReducers: {
+    //Created psot
     [createPost.pending]: (state) => {
       state.loading = true
     },
     [createPost.fulfilled]: (state, action) => {
       state.loading = false
-      // state.posts.push(action.payload)
       state.status = action.payload.message
     },
     [createPost.rejected]: (state) => {
       state.loading = false
       state.status = null
     },
+    //Like psot
     [likePost.pending]: (state) => {
       state.loading = true
     },
@@ -61,19 +99,44 @@ export const postSlice = createSlice({
       state.loading = false
       state.status = null
     },
+     //Delete psot
     [deletePost.pending]: (state) => {
       state.loading = true
     },
     [deletePost.fulfilled]: (state, action) => {
       state.loading = false;
-      state.status = null;
+      state.status = action.payload.message;
     },
     [deletePost.rejected]: (state) => {
       state.loading = false
       state.status = null
     },
+    //Get all posts
+    [getAllPosts.pending]: (state) => {
+      state.loading = true;
+    },
+    [getAllPosts.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.posts = action.payload?.posts;
+    },
+    [getAllPosts.rejected]: (state) => {
+      state.loading = false;
+    },
+    //Get my posts
+    [getMyPosts.pending]: (state) => {
+      state.loading = true;
+    },
+    [getMyPosts.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.posts = action.payload?.posts;
+    },
+    [getMyPosts.rejected]: (state) => {
+      state.loading = false;
+    }
   },
 });
+
+export const { clearStatus, updateLikedPost } = postSlice.actions;
 
 export default postSlice.reducer;
 

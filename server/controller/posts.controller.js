@@ -137,6 +137,17 @@ export const likePost = async (req, res) => {
   }
 };
 
-export const deletePost = (req, res) => {
-  console.log(req.body);
+export const deletePost = async (req, res) => {
+  try {
+    await postSchema.findOneAndDelete({
+      _id : req.body.id
+    });
+    res.json({
+      message: 'Post was deleted.'
+    })
+  } catch (error) {
+    res.json({
+      message: 'Some error, please try later.'
+    })
+  };
 };

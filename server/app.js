@@ -3,13 +3,12 @@ import dotenv from 'dotenv';
 import passport from 'passport';
 import cors from 'cors';
 import fileUpload from 'express-fileupload';
-import { Server } from 'socket.io';
 import { initializeSocketIO } from './utils/socketIOInstanse.js';
 
 
 import DBConnection from './database/db.connection.js';
 import authRouter from './routes/auth.router.js';
-import postsRouter from './routes/posts.route.js';
+import postsRouter from './routes/posts.router.js';
 
 import { passportCheck } from './middleware/passportCheck.js';
 

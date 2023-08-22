@@ -10,7 +10,7 @@ import Image from 'react-bootstrap/Image';
 
 const NewPostPage = () => {
   const dispatch = useDispatch();
-  const { status } = useSelector(state => state.post)
+  const { status } = useSelector(state => state.post);
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
   const [image, setImage] = useState('');
