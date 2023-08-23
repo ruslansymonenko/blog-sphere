@@ -10,6 +10,7 @@ import DBConnection from './database/db.connection.js';
 import authRouter from './routes/auth.router.js';
 import postsRouter from './routes/posts.router.js';
 import commentsRouter from './routes/comments.router.js';
+import userRouter from './routes/user.router.js';
 
 import { passportCheck } from './middleware/passportCheck.js';
 
@@ -31,6 +32,7 @@ passportCheck(passport);
 app.use('/auth', authRouter);
 app.use('/posts', postsRouter);
 app.use('/comments', commentsRouter);
+app.use('/user', userRouter);
 
 const httpServer = app.listen(PORT, () => {
   console.log(`Server was started on port ${PORT} . . .`);

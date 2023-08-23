@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
+import { getUserPostsLikes } from '../../store/slices/userDataSlice';
 
 import { dateFormatter } from '../../helpers/dateFormatter';
 
@@ -15,20 +16,23 @@ const Account = () => {
   const userData = useSelector(state => state.auth.user);
   const [registerDate, setRegisterDate] = useState('');
   const [postsAmount, setPostsAmount] = useState(0);
+  const [userViews, setUserViews] = useState(0);
+
+  const userLikes = useSelector(state => state.userData.userPostsLikes);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if(userData) {
-      let userRegisterDate = dateFormatter(userData.createdAt);
+    dispatch(getUserPostsLikes(userData._id));
+  }, [dispatch, userData]);
 
-      setRegisterDate(userRegisterDate);
-      setPostsAmount(userData.posts.length);
-    }
-  }, [userData]);
+  useEffect(() => {
+    console.log(userLikes);
+  }, [userLikes]);
 
   return (
     <Card.Body 
       className="bg-light p-4"
-
     >
       <Card.Title className="mb-4">My Account</Card.Title>
       <Row>
@@ -57,13 +61,13 @@ const Account = () => {
           <Row className="w-100 mb-1">
             <Col>Likes:</Col>
             <Col className="d-flex justify-content-end">
-              20
+              {userLikes}
             </Col>
           </Row>
           <Row className="w-100 mb-1">
             <Col>Views:</Col>
             <Col className="d-flex justify-content-end">
-              35
+              {userViews}
             </Col>
           </Row>
           <Row className="w-100 mb-1">
