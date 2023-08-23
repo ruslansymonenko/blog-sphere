@@ -5,6 +5,7 @@ import axios from 'axios';
 import { likePost } from '../../store/slices/postSlice';
 
 import DetailedPost from "../../components/DetailedPost/DetailedPost";
+import Comments from '../../containers/Comments/Comments';
 import Loader from '../../components/Loader/Loader';
 
 import { Container } from 'react-bootstrap';
@@ -23,7 +24,6 @@ const PostPage = () => {
     dispatch(likePost(postId))
   }
 
-
   useEffect(() => {
     fetchPost();
   }, []);
@@ -32,13 +32,18 @@ const PostPage = () => {
   }, [post]);
 
   return (
-    <Container>
+    <Container className="d-flex flex-column align-items-center justify-content-around">
     {post ? 
       (
-        <DetailedPost
-          post={post}
-          likeFunction={handleLikePost}
-        />
+        <>
+          <DetailedPost
+            post={post}
+            likeFunction={handleLikePost}
+          />
+          <Comments
+            postId={post._id}
+          />
+        </>
       ) : <Loader/>
     }
     </Container>

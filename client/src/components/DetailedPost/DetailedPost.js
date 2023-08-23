@@ -11,7 +11,7 @@ import commentImg from '../../assets/icons/comment-icon.svg';
 
 const DetailedPost = ({post, likeFunction}) => {
   return (
-    <Container>
+    <Col>
       <Row>
         <Col>
           <Card className="m-2 p-0" style={{ width: '70rem' }}>
@@ -89,7 +89,7 @@ const DetailedPost = ({post, likeFunction}) => {
           </Card>
         </Col>
       </Row>
-    </Container>
+    </Col>
   )
 }
 

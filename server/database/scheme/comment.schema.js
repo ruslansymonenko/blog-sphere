@@ -10,10 +10,12 @@ const commentSchema = new Schema({
   author: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'user',
+    required: true
   },
   post: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'post',
+    required: true
   },
 }, {timestamps: true});
 

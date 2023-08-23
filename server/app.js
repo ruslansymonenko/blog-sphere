@@ -5,10 +5,11 @@ import cors from 'cors';
 import fileUpload from 'express-fileupload';
 import { initializeSocketIO } from './utils/socketIOInstanse.js';
 
-
 import DBConnection from './database/db.connection.js';
+
 import authRouter from './routes/auth.router.js';
 import postsRouter from './routes/posts.router.js';
+import commentsRouter from './routes/comments.router.js';
 
 import { passportCheck } from './middleware/passportCheck.js';
 
@@ -29,6 +30,7 @@ passportCheck(passport);
 //Routes
 app.use('/auth', authRouter);
 app.use('/posts', postsRouter);
+app.use('/comments', commentsRouter);
 
 const httpServer = app.listen(PORT, () => {
   console.log(`Server was started on port ${PORT} . . .`);

@@ -4,6 +4,7 @@ import useSocket from '../../hooks/useSocket';
 import { getAllPosts, getMyPosts ,updateLikedPost, likePost, deletePost, removeDeletedPost } from '../../store/slices/postSlice';
 import { toast } from 'react-toastify';
 import { clearStatus } from '../../store/slices/postSlice';
+import { SERVER_URL } from '../../consts/consts';
 
 import Post from '../../components/Post/Post';
 import InfoWindow from '../../components/InfoWindow/InfoWindow';
@@ -11,7 +12,7 @@ import InfoWindow from '../../components/InfoWindow/InfoWindow';
 import { Col, Row } from 'react-bootstrap';
 
 const Posts = ({type}) => {
-  const serverURL = 'http://localhost:8000';
+  const serverURL = SERVER_URL;
   const socket = useSocket(serverURL);
   const posts = useSelector((state) => state.post.posts);
   const { status } = useSelector(state => state.post);
