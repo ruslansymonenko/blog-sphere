@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { getUserPostsLikes } from '../../store/slices/userDataSlice';
+import { getUserPostsLikes, getUserPostsViews, getUserPostsComments } from '../../store/slices/userDataSlice';
 
 import { dateFormatter } from '../../helpers/dateFormatter';
 
@@ -16,19 +16,22 @@ const Account = () => {
   const userData = useSelector(state => state.auth.user);
   const [registerDate, setRegisterDate] = useState('');
   const [postsAmount, setPostsAmount] = useState(0);
-  const [userViews, setUserViews] = useState(0);
 
   const userLikes = useSelector(state => state.userData.userPostsLikes);
+  const userViews = useSelector(state => state.userData.userPostsViews);
+  const userComments = useSelector(state => state.userData.userPostsComments);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getUserPostsLikes(userData._id));
+    dispatch(getUserPostsViews(userData._id));
+    dispatch(getUserPostsComments(userData._id));
   }, [dispatch, userData]);
 
-  useEffect(() => {
-    console.log(userLikes);
-  }, [userLikes]);
+  // useEffect(() => {
+
+  // }, [userLikes, userViews]);
 
   return (
     <Card.Body 
@@ -73,7 +76,7 @@ const Account = () => {
           <Row className="w-100 mb-1">
             <Col>Comments:</Col>
             <Col className="d-flex justify-content-end">
-              0
+              {userComments}
             </Col>
           </Row>
         </Col>

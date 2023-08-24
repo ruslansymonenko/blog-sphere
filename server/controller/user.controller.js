@@ -19,3 +19,39 @@ export const getUserPostsLikes = async (req, res) => {
     console.log(error);
   }
 };
+
+export const getUserPostsViews = async (req, res) => {
+  try {
+    const userPosts = await postSchema.find({author: req.user._id});
+
+    let totalViews = 0;
+
+    userPosts.forEach(post => {
+      totalViews += post.views;
+    });
+
+    res.json({
+      totalViews: totalViews
+    })
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getUserPostsComments = async (req, res) => {
+  try {
+    const userPosts = await postSchema.find({author: req.user._id});
+
+    let totalComments = 0;
+
+    userPosts.forEach(post => {
+      totalComments += post.comments.length;
+    });
+
+    res.json({
+      totalComments: totalComments
+    })
+  } catch (error) {
+    console.log(error);
+  }
+};

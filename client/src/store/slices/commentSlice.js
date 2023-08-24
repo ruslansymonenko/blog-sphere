@@ -29,7 +29,11 @@ export const commentSlice = createSlice({
   reducers: {
     updateComments: (state, action) => {
       const newComment = action.payload;
-      state.comments.push(newComment);
+      if(state.comments) {
+        state.comments.push(newComment)
+      } else {
+        state.comments = [newComment];
+      }
     },
   },
   extraReducers: {

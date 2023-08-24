@@ -40,6 +40,10 @@ const Comments = ({ postId }) => {
     }));
   }, [dispatch, postId]);
 
+  // useEffect(() => {
+    
+  // }, [comments]);
+
   useEffect(() => {
     if (socket) {
       // Listen for 'add-comment' event

@@ -53,10 +53,6 @@ export const getPostById = async (req, res) => {
     const post = await postSchema.findOneAndUpdate({_id: req.params.id}, {
       $inc: {views: 1},
     });
-
-    const postAuthor = await userSchema.findOneAndUpdate({_id: post.author}, {
-      $inc: {postsViews: 1}
-    });
     
     if (!post) {
       return res.json({
@@ -133,10 +129,6 @@ export const likePost = async (req, res) => {
       { $inc: { likes: 1 } },
       { new: true } // Fetch the updated post
     );
-
-    const postAuthor = await userSchema.findOneAndUpdate({_id: updatedPost.author}, {
-      $inc: {postsLikes: 1}
-    });
     
     io.emit('like-post', updatedPost);
 
