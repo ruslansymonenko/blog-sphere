@@ -1,11 +1,9 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import useSocket from '../../hooks/useSocket';
-import axios from 'axios';
 import { likePost, getPostById } from '../../store/slices/postSlice';
 
-import DetailedPost from "../../components/DetailedPost/DetailedPost";
+import DetailedPost from '../../components/DetailedPost/DetailedPost';
 import Comments from '../../containers/Comments/Comments';
 import Loader from '../../components/Loader/Loader';
 
@@ -43,7 +41,7 @@ const PostPage = () => {
       ) : <Loader/>
     }
     </Container>
-  )
-}
+  );
+};
 
-export default PostPage
+export default PostPage;

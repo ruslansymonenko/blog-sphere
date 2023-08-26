@@ -157,7 +157,7 @@ export const postSlice = createSlice({
     },
     [getPostById.rejected]: (state) => {
       state.loading = false;
-    }
+    },
   },
 });
 

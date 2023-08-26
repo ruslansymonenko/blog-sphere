@@ -144,6 +144,7 @@ export const deletePost = async (req, res) => {
       _id : req.body.id
     });
 
+    //Find and delete data connected with post
     const IdOfCommentsToDelete = postToDelete.comments;
     const commentsToDelete = [];
 
@@ -152,6 +153,7 @@ export const deletePost = async (req, res) => {
       commentsToDelete.push(commentToDelete);
     }
 
+    //Deleting comments of deleted post
     for (const comment of commentsToDelete) {
       await userSchema.findOneAndUpdate(comment.author, {
         $pull: {comments: comment._id}
@@ -162,7 +164,7 @@ export const deletePost = async (req, res) => {
       })
     }
 
-
+    //Deleting posts data on user db collection
     const author = await userSchema.findOneAndUpdate(postToDelete.author, {
       $pull: {posts: req.body.id}
     });

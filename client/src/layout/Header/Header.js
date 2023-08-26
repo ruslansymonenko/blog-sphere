@@ -7,8 +7,6 @@ import { checkIsAuth, logOut } from '../../store/slices/authSlice';
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
-import Dropdown from 'react-bootstrap/Dropdown';
-import DropdownButton from 'react-bootstrap/DropdownButton';
 import Button from 'react-bootstrap/Button';
 import { useEffect } from 'react';
 
@@ -29,7 +27,7 @@ function Header () {
   };
 
   const authNotice = () => {
-    toast.warn('Please, login first')
+    toast.warn('Please, login first');
   }
 
   return (
@@ -37,19 +35,19 @@ function Header () {
       <Navbar expand="lg" className="bg-body-tertiary">
         <Container>
           <Navbar.Brand>
-            <Link className="text-decoration-none text-dark" to={"/"}>Blog Sphere</Link>
+            <Link className="text-decoration-none text-dark" to={'/'}>Blog Sphere</Link>
           </Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Item className="d-flex flex-column align-items-center justify-content-center m-1">
-              <Link className="text-decoration-none text-secondary" to={"/"}>Home</Link>
+              <Link className="text-decoration-none text-secondary" to={'/'}>Home</Link>
             </Nav.Item>
             {isAuth ? (
               <>
                 <Nav.Item className="d-flex flex-column align-items-center justify-content-center m-1">
-                  <Link className="text-decoration-none text-secondary" to={"/myposts"}>My posts</Link>
+                  <Link className="text-decoration-none text-secondary" to={'/myposts'}>My posts</Link>
                 </Nav.Item>
                 <Nav.Item className="d-flex flex-column align-items-center justify-content-center m-1">
-                  <Link className="text-decoration-none text-secondary" to={"/myaccount"}>My account</Link>
+                  <Link className="text-decoration-none text-secondary" to={'/myaccount'}>My account</Link>
                 </Nav.Item>
               </>
             ) : (
@@ -62,10 +60,10 @@ function Header () {
               ) : (
                 <> 
                   <Nav.Item className="d-flex flex-column align-items-center justify-content-center m-1">
-                    <Link className="text-decoration-none text-secondary" to={"/login"}>Login</Link>
+                    <Link className="text-decoration-none text-secondary" to={'/login'}>Login</Link>
                   </Nav.Item>
                   <Nav.Item className="d-flex flex-column align-items-center justify-content-center m-1">
-                    <Link className="text-decoration-none text-secondary" to={"/register"}>Registration</Link>
+                    <Link className="text-decoration-none text-secondary" to={'/register'}>Registration</Link>
                   </Nav.Item>
                 </>
               )

@@ -34,10 +34,6 @@ const NewPostPage = () => {
     } else {
       toast.warn('Title is required');
     }
-    try {
-    } catch (error) {
-      console.log(error)
-    }
   };
 
   const handleCancel = () => {
