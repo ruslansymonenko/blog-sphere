@@ -1,5 +1,6 @@
 import postSchema from "../database/scheme/post.schema.js";
 import userSchema from "../database/scheme/user.schema.js";
+import commentsSchema from '../database/scheme/comment.schema.js';
 import { getSocketIOInstance } from '../utils/socketIOInstanse.js';
 import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
@@ -139,9 +140,37 @@ export const likePost = async (req, res) => {
 
 export const deletePost = async (req, res) => {
   try {
-    await postSchema.findOneAndDelete({
+    const postToDelete = await postSchema.findOne({
       _id : req.body.id
     });
+
+    const IdOfCommentsToDelete = postToDelete.comments;
+    const commentsToDelete = [];
+
+    for (const commentId of IdOfCommentsToDelete) {
+      const commentToDelete = await commentsSchema.findById(commentId);
+      commentsToDelete.push(commentToDelete);
+    }
+
+    for (const comment of commentsToDelete) {
+      await userSchema.findOneAndUpdate(comment.author, {
+        $pull: {comments: comment._id}
+      });
+
+      await commentsSchema.findOneAndDelete({
+        _id: comment._id
+      })
+    }
+
+
+    const author = await userSchema.findOneAndUpdate(postToDelete.author, {
+      $pull: {posts: req.body.id}
+    });
+
+    await postSchema.findOneAndDelete({
+      _id: req.body.id
+    });
+
     res.json({
       message: 'Post was deleted.'
     })

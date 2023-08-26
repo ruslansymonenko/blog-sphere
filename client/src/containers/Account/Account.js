@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { getUserPostsLikes, getUserPostsViews, getUserPostsComments } from '../../store/slices/userDataSlice';
 
 import { dateFormatter } from '../../helpers/dateFormatter';
@@ -14,12 +14,12 @@ import unknownUserImage from '../../assets/icons/unknown-user.png';
 
 const Account = () => {
   const userData = useSelector(state => state.auth.user);
-  const [registerDate, setRegisterDate] = useState('');
-  const [postsAmount, setPostsAmount] = useState(0);
 
   const userLikes = useSelector(state => state.userData.userPostsLikes);
   const userViews = useSelector(state => state.userData.userPostsViews);
   const userComments = useSelector(state => state.userData.userPostsComments);
+  const userPostsAmount = useSelector(state => state.auth.user.posts.length);
+  const userRegistrationDate = dateFormatter(useSelector(state => state.auth.user.createdAt));
 
   const dispatch = useDispatch();
 
@@ -28,10 +28,6 @@ const Account = () => {
     dispatch(getUserPostsViews(userData._id));
     dispatch(getUserPostsComments(userData._id));
   }, [dispatch, userData]);
-
-  // useEffect(() => {
-
-  // }, [userLikes, userViews]);
 
   return (
     <Card.Body 
@@ -52,31 +48,31 @@ const Account = () => {
           <Row className="w-100 mb-1">
             <Col>Registration date:</Col>
             <Col className="d-flex justify-content-end">
-              {registerDate}
+              {userRegistrationDate ? userRegistrationDate : 'd/m/y'}
             </Col>
           </Row>
           <Row className="w-100 mb-1">
             <Col>Posts:</Col>
             <Col className="d-flex justify-content-end">
-              {postsAmount}
+              {userPostsAmount ? userPostsAmount : '0'}
             </Col>
           </Row>
           <Row className="w-100 mb-1">
             <Col>Likes:</Col>
             <Col className="d-flex justify-content-end">
-              {userLikes}
+              {userLikes ? userLikes : '0'}
             </Col>
           </Row>
           <Row className="w-100 mb-1">
             <Col>Views:</Col>
             <Col className="d-flex justify-content-end">
-              {userViews}
+              {userViews ? userViews : '0'}
             </Col>
           </Row>
           <Row className="w-100 mb-1">
             <Col>Comments:</Col>
             <Col className="d-flex justify-content-end">
-              {userComments}
+              {userComments ? userComments : '0'}
             </Col>
           </Row>
         </Col>
