@@ -37,13 +37,22 @@ export const getAllPosts = createAsyncThunk('posts/getAllPosts', async () => {
   }
 });
 
+export const getPostById = createAsyncThunk('posts/getPostById', async (id) => {
+  try{
+    const response = await axios.get(`posts/getpost/${id}`);
+    return response.data
+  } catch (error) {
+    console.log(error)
+  }
+});
+
 export const getMyPosts = createAsyncThunk('posts/getMyPosts', async () => {
   let token = '';
   if(localStorage.getItem('token')) {
     token = localStorage.getItem('token');
   }
   try{
-    const response = await axios.get('http://localhost:8000/posts/getMyPosts', {
+    const response = await axios.get('posts/getMyPosts', {
       headers: {
         Authorization: token,
       }
@@ -58,6 +67,7 @@ export const postSlice = createSlice({
   name: 'post',
   initialState: {
     posts: [],
+    detailedPost: null,
     loading: false,
     status: null,
     error: null,
@@ -135,6 +145,17 @@ export const postSlice = createSlice({
       state.posts = action.payload?.posts;
     },
     [getMyPosts.rejected]: (state) => {
+      state.loading = false;
+    },
+    //Get Post by ID
+    [getPostById.pending]: (state) => {
+      state.loading = true;
+    },
+    [getPostById.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.detailedPost = action.payload.post;
+    },
+    [getPostById.rejected]: (state) => {
       state.loading = false;
     }
   },

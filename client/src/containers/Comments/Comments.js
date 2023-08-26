@@ -40,9 +40,9 @@ const Comments = ({ postId }) => {
     }));
   }, [dispatch, postId]);
 
-  // useEffect(() => {
-    
-  // }, [comments]);
+  useEffect(() => {
+    console.log(comments)
+  }, [comments]);
 
   useEffect(() => {
     if (socket) {

@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import useSocket from '../../hooks/useSocket';
 import axios from 'axios';
-import { likePost } from '../../store/slices/postSlice';
+import { likePost, getPostById } from '../../store/slices/postSlice';
 
 import DetailedPost from "../../components/DetailedPost/DetailedPost";
 import Comments from '../../containers/Comments/Comments';
@@ -11,21 +12,16 @@ import Loader from '../../components/Loader/Loader';
 import { Container } from 'react-bootstrap';
 
 const PostPage = () => {
-  const [post, setPost] = useState(null);
+  const post = useSelector(state => state.post.detailedPost)
   const params = useParams();
   const dispatch = useDispatch();
-
-  const fetchPost = useCallback(async () => {
-    const {data} = await axios.get(`http://localhost:8000/posts/getpost/${params.id}`);
-    setPost(data.post);
-  }, [params.id]);
 
   const handleLikePost = (postId) => {
     dispatch(likePost(postId))
   }
 
   useEffect(() => {
-    fetchPost();
+    dispatch(getPostById(params.id));
   }, []);
 
   useEffect(() => {
